@@ -2,8 +2,6 @@
 #include <iostream>
 #include <random>
 #include <vector>
-#include <format>
-#include <thread>
 #include <tuple>
 #include <cmath>
 struct Locator {
@@ -117,6 +115,21 @@ int main(int argc, char *argv[])
     objects.push_back(get_rnd_obj());
     objects.push_back(get_rnd_obj());
 
+
+    // fly_obj ob1;
+    // ob1.id = 1;
+    // ob1.x0 = 10; ob1.y0 = 10; ob1.z0 = 10;
+    // ob1.Vx = 20; ob1.Vy = 20; ob1.Vz = 20;
+
+    // fly_obj ob2;
+    // ob2.id = 2;
+    // ob2.x0 = 10; ob2.y0 = 12; ob2.z0 = 10;
+    // ob2.Vx = 15; ob2.Vy = 20; ob2.Vz = 20;
+
+    // objects.push_back(ob1);
+    // objects.push_back(ob2);
+    // результат- Only one object
+
     // x(t) = x0 +Vx*t
 
     auto find_pos = [](fly_obj& _obj, float t) { // под поиск реальных позиций в момент времени
@@ -143,9 +156,6 @@ int main(int argc, char *argv[])
         obj.id = 0;
         return obj;
     };
-
-    // auto real_coords_t1 = find_pos(objects[0], t1);
-    // auto real_coords_t2 = find_pos(objects[1], t2);
 
 
     // поиск реальных позиций ... нормальный шум  ... нормальное распределение ... зашумление измерений
@@ -176,7 +186,7 @@ int main(int argc, char *argv[])
     //1. ищещь dt между t1 и t2
     float dt = (t2 - t1)/2.0f;
     //2. прогнозируешь положение цели на t1+dt t2-dt
-    //  ?? разве не -  x = x(t) + v_x * dt
+    //    x = x(t) + v_x * dt
 
     auto predict_move_in = [=](fly_obj& obj){
         float x = obj.x0 + obj.Vx * dt;
@@ -195,10 +205,10 @@ int main(int argc, char *argv[])
     auto coord_t2 = predict_move_back(marks_noise2);
 
     //3. расстояние между двумя спрогнозированными точками
-    float distance = check_Evclid(coord_t1, coord_t2); //
+    float distance = check_Evclid(coord_t1, coord_t2);
     //4. радиус притяжения coord_t1, coord_t2
     float raduis_attr = radius_attracktion(locators[0], locators[1]);
-    //5. радиус притяжения и сравниваешь с расстоянием между 2 точками
+    //5. радиус притяжения и сравнение с расстоянием между 2 точками
     if(distance < raduis_attr){
         std::cout << "Only one object" << std::endl;
     }
