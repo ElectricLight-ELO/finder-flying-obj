@@ -209,6 +209,8 @@ int main(int argc, char *argv[])
     //4. радиус притяжения coord_t1, coord_t2
     float raduis_attr = radius_attracktion(locators[0], locators[1]);
     //5. радиус притяжения и сравнение с расстоянием между 2 точками
+
+    //FIXME: Ошибка в формуле не целочисленные значения так не сравниваются и к тому же расстояние должно браться по модулю
     if(distance < raduis_attr){
         std::cout << "Only one object" << std::endl;
     }
@@ -216,6 +218,7 @@ int main(int argc, char *argv[])
         std::cout << "Multiple objects" << std::endl;
     }
 
+    //Ищи ощибки в математике так как даже при нулевых ошибках 
     int dddebug = 0;
 
     return 0;
