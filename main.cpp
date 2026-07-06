@@ -168,10 +168,10 @@ int main(int argc, char *argv[])
   //  objects.push_back(get_rnd_obj());
   //  objects.push_back(get_rnd_obj());
 
-                  // sig_x, sig_y, sig_z,  sig_vx, sig_vy, sig_vz
+                  // x, y, z,  vx, vy, vz
     fly_obj ob1(1,   10, 10, 10, 20, 20, 20);
 
-    fly_obj ob2(2,   10, 12, 10, 19, 22, 20);
+    fly_obj ob2(2,   11, 12, 10, 19, 22, 20);
 
     objects.push_back(ob1);
     objects.push_back(ob2);
