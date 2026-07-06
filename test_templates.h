@@ -1,10 +1,9 @@
-#include <QCoreApplication>
-#include <iostream>
+#ifndef TEST_TEMPLATES_H
+#define TEST_TEMPLATES_H
 #include <random>
-#include <vector>
 #include <tuple>
 #include <cmath>
-
+#include <iostream>
 struct Locator {
     int id = 0;
 
@@ -143,6 +142,7 @@ Locator get_sko_for_loc(int index) {
     Locator lc(index, s_x, s_y, s_z, s_Vx, s_Vy, s_Vz);
     return lc;
 }
+
 bool check_rad_dist(float dist, float rad){
     if(std::fabs(dist) < rad){
         return true;
@@ -150,66 +150,4 @@ bool check_rad_dist(float dist, float rad){
     return false;
 }
 
-int main(int argc, char *argv[])
-{
-    setlocale(0, "RU");
-    ///  QCoreApplication a(argc, argv);
-
-    // моменты времени
-    const float t1 = 0.0f, t2 = 3.0f;
-
-
-    std::vector<Locator> locators;
-    std::vector<fly_obj> objects;
-
-    locators.push_back(get_sko_for_loc(1));
-    locators.push_back(get_sko_for_loc(2));
-
-  //  objects.push_back(get_rnd_obj());
-  //  objects.push_back(get_rnd_obj());
-
-                  // sig_x, sig_y, sig_z,  sig_vx, sig_vy, sig_vz
-    fly_obj ob1(1,   10, 10, 10, 20, 20, 20);
-
-    fly_obj ob2(2,   10, 12, 10, 19, 22, 20);
-
-    objects.push_back(ob1);
-    objects.push_back(ob2);
-
-    // x(t) = x0 +Vx*t
-
-    fly_obj marks_noise1 = find_pos_normal_noise(objects[0], locators[0], t1);
-    fly_obj marks_noise2 = find_pos_normal_noise(objects[1], locators[1], t2);
-
-
-    //1. ищещь dt между t1 и t2
-    float dt = (t2 - t1)/2.0f;
-    //2. прогнозируешь положение цели на t1+dt t2-dt
-    //    x = x(t) + v_x * dt
-
-
-    auto coord_t1 = predict_move_in(marks_noise1, dt);
-    auto coord_t2 = predict_move_back(marks_noise2, dt);
-
-
-    //3. расстояние между двумя спрогнозированными точками
-    float distance = check_Evclid(coord_t1, coord_t2);
-    //4. радиус притяжения coord_t1, coord_t2
-    float raduis_attr = radius_attracktion(locators[0], locators[1]);
-    //5. радиус притяжения и сравнение с расстоянием между 2 точками
-
-    if(check_rad_dist(distance, raduis_attr)){
-        std::cout << "Only one object" << std::endl;
-    }
-    else {
-        std::cout << "Multiple objects" << std::endl;
-    }
-    // if(std::fabs(distance) < raduis_attr){
-    //     std::cout << "Only one object" << std::endl;
-    // }
-    // else {
-    //     std::cout << "Multiple objects" << std::endl;
-    // }
-
-    return 0;
-}
+#endif // TEST_TEMPLATES_H
